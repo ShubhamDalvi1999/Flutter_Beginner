@@ -13,11 +13,17 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  String _value = "Hello";
+  int _value = 0;
 
   void _onClick() {
     setState(() {
-      _value = "HI i'm eternal";
+      _value++;
+    });
+  }
+
+  void _onMinus() {
+    setState(() {
+      _value--;
     });
   }
 
@@ -32,12 +38,25 @@ class _MyAppState extends State<MyApp> {
         child: Center(
           child: Column(
             children: [
-              Text(_value),
-              ElevatedButton(
-                  onPressed: () {
-                    _onClick();
-                  },
-                  child: Text("click to see magic"))
+              Text(_value.toString()),
+              SizedBox(
+                height: 20,
+              ),
+              IconButton(
+                icon: Icon(Icons.add),
+                onPressed: () {
+                  _onClick();
+                },
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              IconButton(
+                icon: Icon(Icons.remove),
+                onPressed: () {
+                  _onMinus();
+                },
+              ),
             ],
           ),
         ),
