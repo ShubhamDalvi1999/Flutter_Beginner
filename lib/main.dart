@@ -13,17 +13,17 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  int _value = 0;
+  String _value = "";
 
-  void _onClick() {
+  void _onChange(String value) {
     setState(() {
-      _value++;
+      _value = "Change: ${value}";
     });
   }
 
-  void _onMinus() {
+  void _onSubmit(String value) {
     setState(() {
-      _value--;
+      _value = "Submit: ${value}";
     });
   }
 
@@ -38,24 +38,16 @@ class _MyAppState extends State<MyApp> {
         child: Center(
           child: Column(
             children: [
-              Text(_value.toString()),
+              Text(_value),
               SizedBox(
                 height: 20,
               ),
-              IconButton(
-                icon: Icon(Icons.add),
-                onPressed: () {
-                  _onClick();
-                },
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              IconButton(
-                icon: Icon(Icons.remove),
-                onPressed: () {
-                  _onMinus();
-                },
+              TextField(
+                decoration: InputDecoration(
+                  labelText: 'LabelText',
+                  hintText: 'hint',
+                  icon: Icon(Icons.person),
+                ),
               ),
             ],
           ),
