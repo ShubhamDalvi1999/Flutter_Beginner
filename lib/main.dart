@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -13,18 +12,50 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  String _value = "";
+  int _value1 = 0;
+  int _value2 = 0;
 
-  void _onChange(String value) {
-    setState(() {
-      _value = "Change: ${value}";
-    });
+  void _setvalue1(var value) => setState(() {
+        _value1 = value;
+      });
+
+  void _setvalue2(var value) => setState(() {
+        _value2 = value!;
+      });
+
+  Widget makeRadios() {
+    List<Radio> list = [];
+
+    for (var i = 0; i < 3; i++) {
+      list.add(Radio(value: i, groupValue: _value1, onChanged: _setvalue1));
+    }
+
+    Column column = new Column(
+      children: list,
+    );
+
+    return column;
   }
 
-  void _onSubmit(String value) {
-    setState(() {
-      _value = "Submit: ${value}";
-    });
+  Widget makeRadioTiles() {
+    List<RadioListTile> list = [];
+
+    for (var i = 0; i < 3; i++) {
+      list.add(RadioListTile(
+        value: i,
+        groupValue: _value2,
+        onChanged: _setvalue2,
+        activeColor: Colors.green,
+        title: Text("Radio tile $i click anywhere"),
+        controlAffinity: ListTileControlAffinity.trailing,
+      ));
+    }
+
+    Column column = new Column(
+      children: list,
+    );
+
+    return column;
   }
 
   @override
@@ -38,17 +69,8 @@ class _MyAppState extends State<MyApp> {
         child: Center(
           child: Column(
             children: [
-              Text(_value),
-              SizedBox(
-                height: 20,
-              ),
-              TextField(
-                decoration: InputDecoration(
-                  labelText: 'LabelText',
-                  hintText: 'hint',
-                  icon: Icon(Icons.person),
-                ),
-              ),
+              makeRadios(),
+              makeRadioTiles(),
             ],
           ),
         ),
