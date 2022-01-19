@@ -13,19 +13,16 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  String _value = "";
+  bool _value1 = false;
+  bool _value2 = true;
 
-  void _onChange(String value) {
-    setState(() {
-      _value = "Change: ${value}";
-    });
-  }
+  void _value1Changed(bool? value) => setState(() {
+        _value1 = value!;
+      });
 
-  void _onSubmit(String value) {
-    setState(() {
-      _value = "Submit: ${value}";
-    });
-  }
+  void _value2Changed(bool? value) => setState(() {
+        _value2 = value!;
+      });
 
   @override
   Widget build(BuildContext context) {
@@ -38,17 +35,8 @@ class _MyAppState extends State<MyApp> {
         child: Center(
           child: Column(
             children: [
-              Text(_value),
-              SizedBox(
-                height: 20,
-              ),
-              TextField(
-                decoration: InputDecoration(
-                  labelText: 'LabelText',
-                  hintText: 'hint',
-                  icon: Icon(Icons.person),
-                ),
-              ),
+              Checkbox(value: _value1, onChanged: _value1Changed),
+              CheckboxListTile(value: _value2, onChanged: _value2Changed),
             ],
           ),
         ),
