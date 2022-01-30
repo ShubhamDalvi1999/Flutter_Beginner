@@ -12,51 +12,16 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  int _value1 = 0;
-  int _value2 = 0;
+  bool _value1 = true;
+  bool _value2 = true;
 
-  void _setvalue1(var value) => setState(() {
+  void _onChange1(bool value) => setState(() {
         _value1 = value;
       });
 
-  void _setvalue2(var value) => setState(() {
-        _value2 = value!;
+  void _onChange2(bool value) => setState(() {
+        _value2 = value;
       });
-
-  Widget makeRadios() {
-    List<Radio> list = [];
-
-    for (var i = 0; i < 3; i++) {
-      list.add(Radio(value: i, groupValue: _value1, onChanged: _setvalue1));
-    }
-
-    Column column = new Column(
-      children: list,
-    );
-
-    return column;
-  }
-
-  Widget makeRadioTiles() {
-    List<RadioListTile> list = [];
-
-    for (var i = 0; i < 3; i++) {
-      list.add(RadioListTile(
-        value: i,
-        groupValue: _value2,
-        onChanged: _setvalue2,
-        activeColor: Colors.green,
-        title: Text("Radio tile $i click anywhere"),
-        controlAffinity: ListTileControlAffinity.trailing,
-      ));
-    }
-
-    Column column = new Column(
-      children: list,
-    );
-
-    return column;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,8 +34,16 @@ class _MyAppState extends State<MyApp> {
         child: Center(
           child: Column(
             children: [
-              makeRadios(),
-              makeRadioTiles(),
+              Switch(value: _value2, onChanged: _onChange2),
+              SizedBox(
+                height: 34,
+              ),
+              SwitchListTile(
+                value: _value1,
+                onChanged: _onChange1,
+                title: Text("Switch to a functionality "),
+                subtitle: Text("Hi there!!"),
+              )
             ],
           ),
         ),
