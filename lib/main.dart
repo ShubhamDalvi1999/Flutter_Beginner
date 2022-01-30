@@ -12,14 +12,14 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  bool _value1 = true;
-  bool _value2 = true;
+  double _value1 = 0.0;
+  double _value2 = 100;
 
-  void _onChange1(bool value) => setState(() {
+  void _onChange1(double value) => setState(() {
         _value1 = value;
       });
 
-  void _onChange2(bool value) => setState(() {
+  void _onChange2(double value) => setState(() {
         _value2 = value;
       });
 
@@ -34,15 +34,13 @@ class _MyAppState extends State<MyApp> {
         child: Center(
           child: Column(
             children: [
-              Switch(value: _value2, onChanged: _onChange2),
-              SizedBox(
-                height: 34,
-              ),
-              SwitchListTile(
+              Text("Value ${(_value1).round()}"),
+              Slider(
                 value: _value1,
                 onChanged: _onChange1,
-                title: Text("Switch to a functionality "),
-                subtitle: Text("Hi there!!"),
+                max: 5.0,
+                min: 0.0,
+                label: "Amount of time:",
               )
             ],
           ),
