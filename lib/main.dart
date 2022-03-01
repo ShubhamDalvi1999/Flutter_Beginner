@@ -35,14 +35,6 @@ class _MyAppState extends State<MyApp> {
         onPressed: _add,
         child: Icon(Icons.add),
       ),
-        SizedBox(
-          width: 30,
-        ),
-        IconButton(
-          icon: Icon(Icons.remove),
-          onPressed: () => _remove,
-        )
-      ],
       body: Container(
         padding: EdgeInsets.all(32.0),
         child: Center(
