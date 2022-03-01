@@ -15,12 +15,26 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   String _value = "";
   TextEditingController input = TextEditingController();
+  int _val = 0;
+
+  void _add() => setState(() {
+        _val++;
+      });
+
+  void _remove() => setState(() {
+        _val--;
+      });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("New App"),
+        title: Text("Hello World"),
+        backgroundColor: Colors.orangeAccent,
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _add,
+        child: Icon(Icons.add),
       ),
       body: Container(
         padding: EdgeInsets.all(32.0),
@@ -28,19 +42,6 @@ class _MyAppState extends State<MyApp> {
           child: Column(
             children: [
               Text(_value),
-              TextField(
-                controller: input,
-                decoration: InputDecoration(
-                    hintText: "Enter text to see magic",
-                    labelText: "Enter text"),
-              ),
-              ElevatedButton(
-                  onPressed: () {
-                    setState(() {
-                      _value = input.text;
-                    });
-                  },
-                  child: Text("Click me"))
             ],
           ),
         ),
