@@ -12,8 +12,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  String _value = "";
-  TextEditingController input = TextEditingController();
   int _val = 0;
 
   void _add() => setState(() {
@@ -31,10 +29,10 @@ class _MyAppState extends State<MyApp> {
         title: Text("Hello World"),
         backgroundColor: Colors.orangeAccent,
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _add,
-        child: Icon(Icons.add),
-      ),
+      persistentFooterButtons: [
+        IconButton(onPressed: _add, icon: Icon(Icons.add)),
+        IconButton(onPressed: _remove, icon: Icon(Icons.remove)),
+      ],
       body: Container(
         padding: EdgeInsets.all(32.0),
         child: Center(
