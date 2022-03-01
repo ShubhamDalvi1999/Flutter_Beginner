@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'dart:async';
 
 void main() {
   runApp(MaterialApp(home: MyApp()));
@@ -41,7 +40,10 @@ class _MyAppState extends State<MyApp> {
         child: Center(
           child: Column(
             children: [
-              Text(_value),
+              Text(
+                "$_val",
+                style: TextStyle(fontSize: 79),
+              ),
             ],
           ),
         ),
