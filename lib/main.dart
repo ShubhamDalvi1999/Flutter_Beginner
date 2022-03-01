@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:async';
 
 void main() {
   runApp(MaterialApp(home: MyApp()));
@@ -12,16 +13,8 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  double _value1 = 0.0;
-  double _value2 = 100;
-
-  void _onChange1(double value) => setState(() {
-        _value1 = value;
-      });
-
-  void _onChange2(double value) => setState(() {
-        _value2 = value;
-      });
+  String _value = "";
+  TextEditingController input = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -34,14 +27,20 @@ class _MyAppState extends State<MyApp> {
         child: Center(
           child: Column(
             children: [
-              Text("Value ${(_value1).round()}"),
-              Slider(
-                value: _value1,
-                onChanged: _onChange1,
-                max: 5.0,
-                min: 0.0,
-                label: "Amount of time:",
-              )
+              Text(_value),
+              TextField(
+                controller: input,
+                decoration: InputDecoration(
+                    hintText: "Enter text to see magic",
+                    labelText: "Enter text"),
+              ),
+              ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      _value = input.text;
+                    });
+                  },
+                  child: Text("Click me"))
             ],
           ),
         ),
