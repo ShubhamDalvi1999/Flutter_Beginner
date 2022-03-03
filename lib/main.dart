@@ -13,6 +13,8 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   int _val = 0;
+  int _index = 0;
+  String _value = "";
 
   void _add() => setState(() {
         _val++;
@@ -21,6 +23,12 @@ class _MyAppState extends State<MyApp> {
   void _remove() => setState(() {
         _val--;
       });
+
+  List<BottomNavigationBarItem> _navigate = [
+    BottomNavigationBarItem(icon: Icon(Icons.back_hand), label: "Stop"),
+    BottomNavigationBarItem(
+        icon: Icon(Icons.forward_10_sharp), label: "Forward"),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -76,9 +84,21 @@ class _MyAppState extends State<MyApp> {
                 "$_val",
                 style: TextStyle(fontSize: 79),
               ),
+              Text("$_value"),
             ],
           ),
         ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: _navigate,
+        fixedColor: Colors.blue,
+        currentIndex: _index,
+        onTap: (newindex) {
+          setState(() {
+            _index = newindex;
+            _value = "Current index is : $newindex";
+          });
+        },
       ),
     );
   }
