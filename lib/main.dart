@@ -29,10 +29,44 @@ class _MyAppState extends State<MyApp> {
         title: Text("Hello World"),
         backgroundColor: Colors.orangeAccent,
       ),
-      persistentFooterButtons: [
-        IconButton(onPressed: _add, icon: Icon(Icons.add)),
-        IconButton(onPressed: _remove, icon: Icon(Icons.remove)),
-      ],
+      drawer: Drawer(
+        child: Container(
+          child: Column(children: [
+            UserAccountsDrawerHeader(
+              accountName: Text("Shubham Dalvi"),
+              accountEmail: Text("abc@gmail.com"),
+              currentAccountPicture: CircleAvatar(
+                backgroundColor: Colors.purpleAccent,
+                child: Text(
+                  "S",
+                  style: TextStyle(fontSize: 40.0, color: Colors.white),
+                ),
+              ),
+            ),
+            ListTile(
+              leading: Icon(Icons.home),
+              title: Text("Home"),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.settings),
+              title: Text("Settings"),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.contacts),
+              title: Text("Contact Us"),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+          ]),
+        ),
+      ),
       body: Container(
         padding: EdgeInsets.all(32.0),
         child: Center(
