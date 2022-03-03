@@ -12,15 +12,20 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  int _val = 0;
-
-  void _add() => setState(() {
-        _val++;
-      });
-
-  void _remove() => setState(() {
-        _val--;
-      });
+  // void _showmodel() {
+  //   showBottomSheet(
+  //       context: context,
+  //       builder: (BuildContext context) {
+  //         return Container(
+  //           padding: EdgeInsets.all(10.0),
+  //           child: Row(children: [
+  //             Text("no data to dispaly"),
+  //             ElevatedButton(
+  //                 onPressed: () => Navigator.pop(context), child: Text("Close"))
+  //           ]),
+  //         );
+  //       });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -29,19 +34,29 @@ class _MyAppState extends State<MyApp> {
         title: Text("Hello World"),
         backgroundColor: Colors.orangeAccent,
       ),
-      persistentFooterButtons: [
-        IconButton(onPressed: _add, icon: Icon(Icons.add)),
-        IconButton(onPressed: _remove, icon: Icon(Icons.remove)),
-      ],
       body: Container(
         padding: EdgeInsets.all(32.0),
         child: Center(
           child: Column(
             children: [
-              Text(
-                "$_val",
-                style: TextStyle(fontSize: 79),
-              ),
+              Text("dsfa"),
+              ElevatedButton(
+                  onPressed: () {
+                    showModalBottomSheet<void>(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return Container(
+                            padding: EdgeInsets.all(10.0),
+                            child: Row(children: [
+                              Text("no data to dispaly"),
+                              ElevatedButton(
+                                  onPressed: () => Navigator.pop(context),
+                                  child: Text("Close"))
+                            ]),
+                          );
+                        });
+                  },
+                  child: Text("Click ME"))
             ],
           ),
         ),
