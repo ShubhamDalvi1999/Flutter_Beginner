@@ -12,24 +12,17 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  // void _showmodel() {
-  //   showBottomSheet(
-  //       context: context,
-  //       builder: (BuildContext context) {
-  //         return Container(
-  //           padding: EdgeInsets.all(10.0),
-  //           child: Row(children: [
-  //             Text("no data to dispaly"),
-  //             ElevatedButton(
-  //                 onPressed: () => Navigator.pop(context), child: Text("Close"))
-  //           ]),
-  //         );
-  //       });
-  // }
+  final GlobalKey<ScaffoldState> _scaffoldstate = GlobalKey<ScaffoldState>();
+
+  void _showsnackbar() {
+    _scaffoldstate.currentState
+        ?.showSnackBar(SnackBar(content: Text("Hello SnackBar")));
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldstate, //stateofScaffold
       appBar: AppBar(
         title: Text("Hello World"),
         backgroundColor: Colors.orangeAccent,
@@ -39,24 +32,8 @@ class _MyAppState extends State<MyApp> {
         child: Center(
           child: Column(
             children: [
-              Text("dsfa"),
-              ElevatedButton(
-                  onPressed: () {
-                    showModalBottomSheet<void>(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return Container(
-                            padding: EdgeInsets.all(10.0),
-                            child: Row(children: [
-                              Text("no data to dispaly"),
-                              ElevatedButton(
-                                  onPressed: () => Navigator.pop(context),
-                                  child: Text("Close"))
-                            ]),
-                          );
-                        });
-                  },
-                  child: Text("Click ME"))
+              Text("Snack Bar Widget"),
+              ElevatedButton(onPressed: _showsnackbar, child: Text("Click ME"))
             ],
           ),
         ),
