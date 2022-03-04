@@ -14,17 +14,25 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   final GlobalKey<ScaffoldState> _scaffoldstate = GlobalKey<ScaffoldState>();
 
-  void _showsnackbar() {
-    _scaffoldstate.currentState
-        ?.showSnackBar(SnackBar(content: Text("Hello SnackBar")));
+  Future _showAlertBox(BuildContext context, String msg) async {
+    return showDialog(
+      //Wrapping Alertbox with showDialog is complusory
+      context: context,
+      builder: (BuildContext context) {
+        //return statement in alertBox is important
+        return AlertDialog(content: Text("$msg"), actions: [
+          TextButton(
+              onPressed: () => Navigator.of(context).pop(), child: Text("OK"))
+        ]);
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _scaffoldstate, //stateofScaffold
       appBar: AppBar(
-        title: Text("Hello World"),
+        title: Text("Basic Flutter"),
         backgroundColor: Colors.orangeAccent,
       ),
       body: Container(
@@ -32,8 +40,11 @@ class _MyAppState extends State<MyApp> {
         child: Center(
           child: Column(
             children: [
-              Text("Snack Bar Widget"),
-              ElevatedButton(onPressed: _showsnackbar, child: Text("Click ME"))
+              Text("Alert Box Widget"),
+              ElevatedButton(
+                  onPressed: () =>
+                      _showAlertBox(context, "Hi this is a alert box"),
+                  child: Text("Click ME"))
             ],
           ),
         ),
