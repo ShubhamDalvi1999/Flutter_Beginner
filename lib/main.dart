@@ -24,63 +24,15 @@ class _MyAppState extends State<MyApp> {
       ),
       body: Column(
         children: [
-          SizedBox(
-            height: 50,
+          Text("Images"),
+          Expanded(
+            flex: 1,
+            child: Image.asset(
+                "images/space-2560x1600-apple-universe-wallpaper-preview.jpg"),
           ),
-          Card(
-            child: Center(
-              child: Column(
-                children: [
-                  Text("Please Login"),
-                  Row(
-                    children: [
-                      Text("Username"),
-                      // TextField(
-                      //   controller: _user,
-                      // ) //cannot do thiss
-                      Expanded(
-                          child: TextField(
-                        controller: _user,
-                      ))
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Text("Password"),
-                      // TextField(
-                      //   controller: _user,
-                      // ) //cannot do thiss
-                      Expanded(
-                          child: TextField(
-                        controller: _pass,
-                        obscureText: true,
-                      ))
-                    ],
-                  ),
-                  Padding(
-                      padding: EdgeInsets.all(20.0),
-                      child: ElevatedButton(
-                        onPressed: () => {},
-                        child: Text("Login"),
-                      )),
-                ],
-              ),
-            ),
-          ),
-          SizedBox(
-            height: 50,
-          ),
-          Card(
-            color: Colors.yellow,
-            child: Center(
-              child: Column(
-                children: [
-                  Text("Hello Card"),
-                  Text("Hello Card"),
-                ],
-              ),
-            ),
-          ),
+          Expanded(
+              flex: 2,
+              child: Image.asset("images/the-launch3840-×-2160-wallpaper.jpg"))
         ],
       ),
     );
