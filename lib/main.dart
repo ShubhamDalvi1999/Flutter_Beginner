@@ -12,21 +12,8 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final GlobalKey<ScaffoldState> _scaffoldstate = GlobalKey<ScaffoldState>();
-
-  Future _showAlertBox(BuildContext context, String msg) async {
-    return showDialog(
-      //Wrapping Alertbox with showDialog is complusory
-      context: context,
-      builder: (BuildContext context) {
-        //return statement in alertBox is important
-        return AlertDialog(content: Text("$msg"), actions: [
-          TextButton(
-              onPressed: () => Navigator.of(context).pop(), child: Text("OK"))
-        ]);
-      },
-    );
-  }
+  TextEditingController _user = new TextEditingController();
+  TextEditingController _pass = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -40,11 +27,38 @@ class _MyAppState extends State<MyApp> {
         child: Center(
           child: Column(
             children: [
-              Text("Alert Box Widget"),
-              ElevatedButton(
-                  onPressed: () =>
-                      _showAlertBox(context, "Hi this is a alert box"),
-                  child: Text("Click ME"))
+              Text("Please Login"),
+              Row(
+                children: [
+                  Text("Username"),
+                  // TextField(
+                  //   controller: _user,
+                  // ) //cannot do thiss
+                  Expanded(
+                      child: TextField(
+                    controller: _user,
+                  ))
+                ],
+              ),
+              Row(
+                children: [
+                  Text("Password"),
+                  // TextField(
+                  //   controller: _user,
+                  // ) //cannot do thiss
+                  Expanded(
+                      child: TextField(
+                    controller: _pass,
+                    obscureText: true,
+                  ))
+                ],
+              ),
+              Padding(
+                  padding: EdgeInsets.all(20.0),
+                  child: ElevatedButton(
+                    onPressed: () => {},
+                    child: Text("Login"),
+                  )),
             ],
           ),
         ),
