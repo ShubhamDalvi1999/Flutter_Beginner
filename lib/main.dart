@@ -11,77 +11,61 @@ class MyApp extends StatefulWidget {
   _MyAppState createState() => _MyAppState();
 }
 
+enum Animals { Cat, Dog, Bird, Lizard, Rabbit }
+
 class _MyAppState extends State<MyApp> {
-  int counter = 0;
-  List<Widget> _list = [];
+  Animals _selected = Animals.Cat;
+  String _value = "Make a Selection";
+  List<PopupMenuEntry<Animals>> _items = [];
 
   @override
   void initState() {
     super.initState();
-    for (int i = 0; i <= 5; i++) {
-      Widget child = _newItem(i);
-      _list.add(child);
+    for (Animals animals in Animals.values) {
+      _items.add(PopupMenuItem(
+        child: Text(_getDisplay(
+            animals)), //could work with Text("$animals"), but it displays Animals.Cat , Animals.rabbit etc
+        value: animals,
+      ));
     }
   }
 
-  void _onClicked() {
-    Widget child = _newItem(counter);
+  void _onSelected(Animals animals) {
     setState(() {
-      _list.add(child);
+      _selected = animals;
+      _value = "You Selected ${_getDisplay(animals)}";
     });
   }
 
-  Widget _newItem(int i) {
-    Key key = new Key("Item $i");
-    Container child = new Container(
-      key: key,
-      padding: EdgeInsets.all(10.0),
-      child: Chip(
-        label: Text("$i Name here"),
-        onDeleted: () =>
-            _removeItem(key), //does not work with only writing _removeItem()
-        deleteIconColor: Colors.red,
-        deleteButtonTooltipMessage: "Delete",
-        avatar: CircleAvatar(
-          backgroundColor: Colors.yellow,
-          child: Text("$i"),
-        ),
-      ),
-    );
-    counter++;
-    return child;
-  }
-
-  void _removeItem(Key ikey) {
-    for (int i = 0; i < _list.length; i++) {
-      Widget child = _list.elementAt(i);
-      if (child.key == ikey) {
-        setState(
-            () => _list.removeAt(i)); //it's always removeAt(i) not remove()
-        print("Removing ${ikey.toString()}");
-      }
-    }
+  String _getDisplay(Animals animals) {
+    int index = animals.toString().indexOf(".");
+    index++;
+    return animals.toString().substring(index);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Hello"),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _onClicked,
-        child: Icon(Icons.add),
+        title: Text("App"),
       ),
       body: Container(
         padding: EdgeInsets.all(10.0),
-        child: SingleChildScrollView(
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: _list,
-            ),
+        child: Center(
+          child: Column(
+            children: [
+              Container(
+                padding: EdgeInsets.all(10.0),
+                child: Text(_value),
+              ),
+              PopupMenuButton<Animals>(
+                  child: Icon(Icons.input),
+                  initialValue: Animals.Cat,
+                  onSelected: _onSelected,
+                  itemBuilder: (BuildContext context) {
+                    return _items;
+                  })
+            ],
           ),
         ),
       ),
