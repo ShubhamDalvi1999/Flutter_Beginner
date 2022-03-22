@@ -11,36 +11,44 @@ class MyApp extends StatefulWidget {
   _MyAppState createState() => _MyAppState();
 }
 
-enum Animals { Cat, Dog, Bird, Lizard, Rabbit }
+class MyItem {
+  bool isExpanded;
+  final String header;
+  final Widget widget_body;
+
+  MyItem({
+    required this.isExpanded,
+    required this.header,
+    required this.widget_body,
+  });
+}
 
 class _MyAppState extends State<MyApp> {
-  Animals _selected = Animals.Cat;
-  String _value = "Make a Selection";
-  List<PopupMenuEntry<Animals>> _items = [];
+  List<MyItem> _items = [];
 
   @override
   void initState() {
     super.initState();
-    for (Animals animals in Animals.values) {
-      _items.add(PopupMenuItem(
-        child: Text(_getDisplay(
-            animals)), //could work with Text("$animals"), but it displays Animals.Cat , Animals.rabbit etc
-        value: animals,
-      ));
+    for (var i = 0; i < 10; i++) {
+      _items.add(MyItem(
+          isExpanded: false,
+          header: "Item ${i}",
+          widget_body: Container(
+            padding: EdgeInsets.all(10.0),
+            child: Text("Hello World"),
+          )));
     }
   }
 
-  void _onSelected(Animals animals) {
-    setState(() {
-      _selected = animals;
-      _value = "You Selected ${_getDisplay(animals)}";
-    });
-  }
-
-  String _getDisplay(Animals animals) {
-    int index = animals.toString().indexOf(".");
-    index++;
-    return animals.toString().substring(index);
+  ExpansionPanel createiten(MyItem item) {
+    return new ExpansionPanel(
+        headerBuilder: (BuildContext context, bool isExpanded) {
+          return new Container(
+              padding: new EdgeInsets.all(5.0),
+              child: new Text("Header 5(item.header)"));
+        },
+        body: item.widget_body,
+        isExpanded: item.isExpanded);
   }
 
   @override
@@ -53,19 +61,7 @@ class _MyAppState extends State<MyApp> {
         padding: EdgeInsets.all(10.0),
         child: Center(
           child: Column(
-            children: [
-              Container(
-                padding: EdgeInsets.all(10.0),
-                child: Text(_value),
-              ),
-              PopupMenuButton<Animals>(
-                  child: Icon(Icons.input),
-                  initialValue: Animals.Cat,
-                  onSelected: _onSelected,
-                  itemBuilder: (BuildContext context) {
-                    return _items;
-                  })
-            ],
+            children: [],
           ),
         ),
       ),
