@@ -40,12 +40,12 @@ class _MyAppState extends State<MyApp> {
     }
   }
 
-  ExpansionPanel createiten(MyItem item) {
+  ExpansionPanel _createitem(MyItem item) {
     return new ExpansionPanel(
         headerBuilder: (BuildContext context, bool isExpanded) {
           return new Container(
               padding: new EdgeInsets.all(5.0),
-              child: new Text("Header 5(item.header)"));
+              child: new Text("Header ${item.header}"));
         },
         body: item.widget_body,
         isExpanded: item.isExpanded);
@@ -61,7 +61,17 @@ class _MyAppState extends State<MyApp> {
         padding: EdgeInsets.all(10.0),
         child: Center(
           child: Column(
-            children: [],
+            children: [
+              ExpansionPanelList(
+                expansionCallback: (int index, bool isExpanded) {
+                  setState(() {
+                    _items[index].isExpanded = !_items[index].isExpanded;
+                  });
+                },
+                children:
+                    _items.map(_createitem).toList(), //mapping list of item ()
+              )
+            ],
           ),
         ),
       ),
