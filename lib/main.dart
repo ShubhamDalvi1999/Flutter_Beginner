@@ -11,44 +11,38 @@ class MyApp extends StatefulWidget {
   _MyAppState createState() => _MyAppState();
 }
 
-class MyItem {
-  bool isExpanded;
-  final String header;
-  final Widget widget_body;
+// class MyItem {
+//   bool isExpanded;
+//   final String header;
+//   final Widget widget_body;
 
-  MyItem({
-    required this.isExpanded,
-    required this.header,
-    required this.widget_body,
-  });
-}
+//   MyItem({
+//     required this.isExpanded,
+//     required this.header,
+//     required this.widget_body,
+//   });
+// }
 
 class _MyAppState extends State<MyApp> {
-  List<MyItem> _items = [];
+  List<ExpansionPanel> _items = [];
+  bool active = false;
 
   @override
   void initState() {
     super.initState();
-    for (var i = 0; i < 10; i++) {
-      _items.add(MyItem(
-          isExpanded: false,
-          header: "Item ${i}",
-          widget_body: Container(
+    for (var i = 0; i < 5; i++) {
+      _items.add(ExpansionPanel(
+          headerBuilder: (BuildContext context, bool isExpanded) {
+            return new Container(
+                padding: new EdgeInsets.all(5.0), child: new Text("Item $i"));
+          },
+          body: Container(
             padding: EdgeInsets.all(10.0),
-            child: Text("Hello World"),
-          )));
+            child: Text("Hello $i"),
+          ),
+          isExpanded: active,
+          canTapOnHeader: true));
     }
-  }
-
-  ExpansionPanel _createitem(MyItem item) {
-    return new ExpansionPanel(
-        headerBuilder: (BuildContext context, bool isExpanded) {
-          return new Container(
-              padding: new EdgeInsets.all(5.0),
-              child: new Text("Header ${item.header}"));
-        },
-        body: item.widget_body,
-        isExpanded: item.isExpanded);
   }
 
   @override
@@ -64,12 +58,11 @@ class _MyAppState extends State<MyApp> {
             children: [
               ExpansionPanelList(
                 expansionCallback: (int index, bool isExpanded) {
-                  setState(() {
-                    _items[index].isExpanded = !_items[index].isExpanded;
-                  });
+                  isExpanded = !isExpanded;
+                  print("value of isExpanded:  $isExpanded");
                 },
-                children:
-                    _items.map(_createitem).toList(), //mapping list of item ()
+                children: _items,
+                //mapping list of item ()
               )
             ],
           ),
