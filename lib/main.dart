@@ -11,6 +11,7 @@ class MyApp extends StatefulWidget {
   _MyAppState createState() => _MyAppState();
 }
 
+//the Custom Class that we want map with a widget to display on the main body
 class Choice {
   final String title;
   final IconData icon;
@@ -50,12 +51,13 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
                     alignment: Alignment.center,
                     child: TabPageSelector(
                       controller: _controller,
-                    ),
+                    ), //TabPageSelector controller
                   )),
               preferredSize: Size.fromHeight(48.0)),
         ),
         body: TabBarView(
           controller: _controller,
+          //mapping object of each class to a WIDGET
           children: _items
               .map((Choice i) => Container(
                     padding: EdgeInsets.all(32.0),
