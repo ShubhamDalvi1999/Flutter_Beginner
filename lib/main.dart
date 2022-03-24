@@ -11,63 +11,64 @@ class MyApp extends StatefulWidget {
   _MyAppState createState() => _MyAppState();
 }
 
-// class MyItem {
-//   bool isExpanded;
-//   final String header;
-//   final Widget widget_body;
+class Choice {
+  final String title;
+  final IconData icon;
 
-//   MyItem({
-//     required this.isExpanded,
-//     required this.header,
-//     required this.widget_body,
-//   });
-// }
+  Choice({
+    required this.title,
+    required this.icon,
+  });
+}
 
-class _MyAppState extends State<MyApp> {
-  List<ExpansionPanel> _items = [];
-  bool active = false;
+//with TickerProviderStateMixin is a fix to the error of "vsync: this"
+
+class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
+  late TabController _controller;
+  List<Choice> _items = <Choice>[
+    Choice(title: "Car", icon: Icons.directions_car),
+    Choice(title: "Bicycle", icon: Icons.directions_bike),
+  ];
 
   @override
   void initState() {
     super.initState();
-    for (var i = 0; i < 5; i++) {
-      _items.add(ExpansionPanel(
-          headerBuilder: (BuildContext context, bool isExpanded) {
-            return new Container(
-                padding: new EdgeInsets.all(5.0), child: new Text("Item $i"));
-          },
-          body: Container(
-            padding: EdgeInsets.all(10.0),
-            child: Text("Hello $i"),
-          ),
-          isExpanded: active,
-          canTapOnHeader: true));
-    }
+    _controller = new TabController(length: _items.length, vsync: this);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("App"),
-      ),
-      body: Container(
-        padding: EdgeInsets.all(10.0),
-        child: Center(
-          child: Column(
-            children: [
-              ExpansionPanelList(
-                expansionCallback: (int index, bool isExpanded) {
-                  isExpanded = !isExpanded;
-                  print("value of isExpanded:  $isExpanded");
-                },
-                children: _items,
-                //mapping list of item ()
-              )
-            ],
-          ),
+        appBar: AppBar(
+          title: Text("App2"),
+          bottom: PreferredSize(
+              child: Theme(
+                  data: Theme.of(context).copyWith(
+                      colorScheme: ColorScheme.fromSwatch()
+                          .copyWith(secondary: Colors.white)),
+                  child: Container(
+                    alignment: Alignment.center,
+                    child: TabPageSelector(
+                      controller: _controller,
+                    ),
+                  )),
+              preferredSize: Size.fromHeight(48.0)),
         ),
-      ),
-    );
+        body: TabBarView(
+          controller: _controller,
+          children: _items
+              .map((Choice i) => Container(
+                    padding: EdgeInsets.all(32.0),
+                    child: Center(
+                      child: Column(
+                        children: [
+                          Text(i.title),
+                          Icon(i.icon, size: 120.0),
+                        ],
+                      ),
+                    ),
+                  ))
+              .toList(),
+        ));
   }
 }
