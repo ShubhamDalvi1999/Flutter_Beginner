@@ -1,5 +1,5 @@
 import 'dart:math';
-
+import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 
 void main() {
@@ -13,57 +13,50 @@ class MyApp extends StatefulWidget {
   _MyAppState createState() => _MyAppState();
 }
 
-class Area {
-  int index;
-  String name;
-  Color color;
-  Area({
-    this.index: -1,
-    this.name: "Area",
-    this.color: Colors.lightBlueAccent,
+class Sales {
+  int sales;
+  String year;
+  Sales({
+    required this.sales,
+    required this.year,
   });
 }
 
 class _MyAppState extends State<MyApp> {
-  List<Area> _areas = [];
-  int _location = 0;
+  List<Sales> _data = [];
+  List<charts.Series<Sales, String>> _chartdata = [];
 
   @override
   void initState() {
     super.initState();
-    for (var i = 0; i < 16; i++) {
-      _areas.add(Area(index: i, name: "Area $i"));
+    final rnd = new Random();
+    for (var i = 2010; i < 2012; i++) {
+      _data.add(Sales(year: i.toString(), sales: rnd.nextInt(1000)));
     }
-    var rndm = new Random();
-    _location = rndm.nextInt(_areas.length);
+    _chartdata.add(charts.Series(
+      id: "Sales",
+      colorFn: (_, __) => charts.MaterialPalette.green.shadeDefault,
+      data: _data,
+      domainFn: (Sales sales, _) => sales.year,
+      measureFn: (Sales sales, _) => sales.sales,
+      fillPatternFn: (_, __) => charts.FillPatternType.solid,
+      displayName: 'sales',
+    ));
   }
 
-  void _onPressed(int index) {
-    print("location is $_location");
-    print("index clicked is $index");
-    setState(() {
-      if (index == _location) {
-        _areas[index].color = Colors.lightGreen;
-      } else {
-        _areas[index].color = Colors.red;
-      }
-    });
-  }
-
-  Widget _generate(int index) {
-    return GridTile(
-        child: Container(
-      padding: EdgeInsets.all(5.0),
-      child: ElevatedButton(
-          onPressed: () => _onPressed(index),
-          //color property
-          style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(_areas[index].color),
-          ),
-          child: Text(
-            _areas[index].name,
-            textAlign: TextAlign.center,
-          )),
+  void _makeData() {
+    final rnd = new Random();
+    for (var i = 2010; i < 2022; i++) {
+      _data.add(Sales(year: i.toString(), sales: rnd.nextInt(1000)));
+    }
+    _chartdata.add(charts.Series(
+      id: "Sales",
+      colorFn: (_, __) => charts.MaterialPalette.green.shadeDefault,
+      data: _data,
+      domainFn: (Sales sales, _) => sales.year,
+      measureFn: (Sales sales, _) => sales.sales,
+      fillPatternFn: (_, __) => charts.FillPatternType.solid,
+      displayName: 'sales',
     ));
   }
 
@@ -74,13 +67,16 @@ class _MyAppState extends State<MyApp> {
         title: Text("App"),
       ),
       body: Container(
-          padding: EdgeInsets.all(32.0),
-          child: Center(
-            child: GridView.count(
-              crossAxisCount: 4,
-              children: List.generate(16, (index) => _generate(index)),
-            ),
-          )),
+        padding: EdgeInsets.all(32.0),
+        child: Center(
+          child: Column(
+            children: [
+              const Text("Sales Data"),
+              Expanded(child: charts.BarChart(_chartdata)),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
