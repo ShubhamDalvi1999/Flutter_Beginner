@@ -36,7 +36,10 @@ class _MyAppState extends State<MyApp> {
     super.initState();
     final rnd = new Random();
     for (var i = 2010; i < 2012; i++) {
-      _data.add(Sales(year: i.toString(), sales: rnd.nextInt(1000)));
+      _data.add(
+        Sales(year: i.toString(), sales: rnd.nextInt(1000)),
+      );
+      // SALES DATA ADDED TO THE LIST OF SALES
     }
     _chartdata.add(charts.Series(
       id: "Sales",
@@ -47,26 +50,6 @@ class _MyAppState extends State<MyApp> {
       fillPatternFn: (_, __) => charts.FillPatternType.solid,
       displayName: 'sales',
     ));
-  }
-
-  void _makeData() {
-    final rnd = new Random();
-    for (var i = 2010; i < 2022; i++) {
-      _data.add(
-        Sales(year: i.toString(), sales: rnd.nextInt(1000)),
-      ); // SALES DATA ADDED TO THE LIST OF SALES
-    }
-    _chartdata.add(
-      charts.Series(
-        id: "Sales",
-        colorFn: (_, __) => charts.MaterialPalette.green.shadeDefault,
-        data: _data,
-        domainFn: (Sales sales, _) => sales.year,
-        measureFn: (Sales sales, _) => sales.sales,
-        fillPatternFn: (_, __) => charts.FillPatternType.solid,
-        displayName: 'sales',
-      ),
-    );
   }
 
   @override
