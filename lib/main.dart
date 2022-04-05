@@ -24,6 +24,8 @@ class Sales {
 
 class _MyAppState extends State<MyApp> {
   List<Sales> _data = [];
+  //SALES DATA FOR X AND Y AXIS IN THE FORM OF A CUSTOM CLASS SALES
+
   List<charts.Series<Sales, String>> _chartdata = [];
 
   @override
@@ -37,8 +39,8 @@ class _MyAppState extends State<MyApp> {
       id: "Sales",
       colorFn: (_, __) => charts.MaterialPalette.green.shadeDefault,
       data: _data,
-      domainFn: (Sales sales, _) => sales.year,
-      measureFn: (Sales sales, _) => sales.sales,
+      domainFn: (Sales sales, _) => sales.year, //X axis
+      measureFn: (Sales sales, _) => sales.sales, //Y axis
       fillPatternFn: (_, __) => charts.FillPatternType.solid,
       displayName: 'sales',
     ));
@@ -47,17 +49,21 @@ class _MyAppState extends State<MyApp> {
   void _makeData() {
     final rnd = new Random();
     for (var i = 2010; i < 2022; i++) {
-      _data.add(Sales(year: i.toString(), sales: rnd.nextInt(1000)));
+      _data.add(
+        Sales(year: i.toString(), sales: rnd.nextInt(1000)),
+      ); // SALES DATA ADDED TO THE LIST OF SALES
     }
-    _chartdata.add(charts.Series(
-      id: "Sales",
-      colorFn: (_, __) => charts.MaterialPalette.green.shadeDefault,
-      data: _data,
-      domainFn: (Sales sales, _) => sales.year,
-      measureFn: (Sales sales, _) => sales.sales,
-      fillPatternFn: (_, __) => charts.FillPatternType.solid,
-      displayName: 'sales',
-    ));
+    _chartdata.add(
+      charts.Series(
+        id: "Sales",
+        colorFn: (_, __) => charts.MaterialPalette.green.shadeDefault,
+        data: _data,
+        domainFn: (Sales sales, _) => sales.year,
+        measureFn: (Sales sales, _) => sales.sales,
+        fillPatternFn: (_, __) => charts.FillPatternType.solid,
+        displayName: 'sales',
+      ),
+    );
   }
 
   @override
