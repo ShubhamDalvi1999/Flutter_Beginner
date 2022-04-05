@@ -17,10 +17,12 @@ class MyApp extends StatefulWidget {
 
 class Sales {
   int sales;
-  String year;
+  int year;
+  charts.Color color;
   Sales({
     required this.sales,
     required this.year,
+    required this.color,
   });
 }
 
@@ -29,26 +31,35 @@ class _MyAppState extends State<MyApp> {
   List<Sales> _data = [];
 
   //LIST OF CHART SERIES
-  List<charts.Series<Sales, String>> _chartdata = [];
+  List<charts.Series<Sales, int>> _chartdata = [];
 
   @override
   void initState() {
     super.initState();
-    final rnd = new Random();
-    for (var i = 2010; i < 2012; i++) {
-      _data.add(
-        Sales(year: i.toString(), sales: rnd.nextInt(1000)),
-      );
-      // SALES DATA ADDED TO THE LIST OF SALES
-    }
+    _data = <Sales>[
+      Sales(
+          sales: 4,
+          year: 20,
+          color: charts.MaterialPalette.purple.shadeDefault),
+      Sales(
+          sales: 1,
+          year: 15,
+          color: charts.MaterialPalette.deepOrange.shadeDefault),
+      Sales(
+          sales: 2,
+          year: 35,
+          color: charts.MaterialPalette.yellow.shadeDefault),
+      Sales(
+          sales: 3, year: 30, color: charts.MaterialPalette.green.shadeDefault),
+    ]; //actual chart data
+    //now creating a series of chartdata
     _chartdata.add(charts.Series(
       id: "Sales",
-      colorFn: (_, __) => charts.MaterialPalette.green.shadeDefault,
       data: _data,
-      domainFn: (Sales sales, _) => sales.year, //X axis
-      measureFn: (Sales sales, _) => sales.sales, //Y axis
-      fillPatternFn: (_, __) => charts.FillPatternType.solid,
-      displayName: 'sales',
+      domainFn: (Sales sales, _) => sales.year,
+      measureFn: (Sales sales, _) => sales.sales,
+      colorFn: (Sales sales, _) => sales.color,
+      labelAccessorFn: (Sales sales, _) => '${sales.year}: ${sales.sales}',
     ));
   }
 
@@ -65,7 +76,17 @@ class _MyAppState extends State<MyApp> {
             children: [
               const Text("Sales Data"),
               Expanded(
-                child: charts.BarChart(_chartdata),
+                child: charts.PieChart(
+                  _chartdata,
+                  animate: true,
+                  defaultRenderer:
+                      charts.ArcRendererConfig(arcRendererDecorators: [
+                    new charts.ArcLabelDecorator(
+                        labelPosition: charts.ArcLabelPosition.inside,
+                        insideLabelStyleSpec: new charts.TextStyleSpec(
+                            fontSize: 16, color: charts.Color.black))
+                  ]),
+                ),
               ),
             ],
           ),
