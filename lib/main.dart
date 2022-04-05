@@ -3,7 +3,9 @@ import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MaterialApp(home: MyApp()));
+  runApp(
+    MaterialApp(debugShowCheckedModeBanner: false, home: MyApp()),
+  );
 }
 
 class MyApp extends StatefulWidget {
@@ -23,9 +25,10 @@ class Sales {
 }
 
 class _MyAppState extends State<MyApp> {
-  List<Sales> _data = [];
   //SALES DATA FOR X AND Y AXIS IN THE FORM OF A CUSTOM CLASS SALES
+  List<Sales> _data = [];
 
+  //LIST OF CHART SERIES
   List<charts.Series<Sales, String>> _chartdata = [];
 
   @override
@@ -78,7 +81,9 @@ class _MyAppState extends State<MyApp> {
           child: Column(
             children: [
               const Text("Sales Data"),
-              Expanded(child: charts.BarChart(_chartdata)),
+              Expanded(
+                child: charts.BarChart(_chartdata),
+              ),
             ],
           ),
         ),
